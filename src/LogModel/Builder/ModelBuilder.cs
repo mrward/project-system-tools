@@ -1111,9 +1111,9 @@ namespace Microsoft.VisualStudio.ProjectSystem.LogModel.Builder
                 projectInfo.Result);
 
         private Build ConstructBuild() =>
-            new Build(_projectInfos.Values.Any(p => p.ParentProject == BuildEventContext.InvalidProjectContextId) 
-                    ? ConstructProject(_projectInfos.Values.Single(p => p.ParentProject == BuildEventContext.InvalidProjectContextId))
-                    : null,
+            new Build(
+                _projectInfos.Values.Where(p => p.ParentProject == BuildEventContext.InvalidProjectContextId)
+                    .Select(projectInfo => ConstructProject(projectInfo)),
                 _buildInfo.Environment,
                 EmptyIfNull(_buildInfo.Messages?.Select(ConstructMessage).OrderBy(OrderMessages).ToImmutableList()), 
                 _buildInfo.StartTime, 

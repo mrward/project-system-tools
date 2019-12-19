@@ -42,9 +42,12 @@ namespace Microsoft.VisualStudio.ProjectSystem.Tools.BinaryLogEditor.ViewModel
         {
             var list = new List<object>();
 
-            if (_build.Project != null)
+            if (_build.Projects != null)
             {
-                list.Add(new ProjectViewModel(_build.Project));
+                foreach (Project project in _build.Projects)
+                {
+                    list.Add (new ProjectViewModel (project));
+                }
             }
 
             return list;
